@@ -10,8 +10,8 @@ robotConfig:
   deviceType: Controller
   name: Controller
   port: []
-  setting: {drive: none, e: '', eDir: 'false', f: '', fDir: 'false', l3r3: '', l3r3Dir: 'false',
-    left: '', leftDir: 'false', right: '', rightDir: 'false'}
+  setting: {drive: arcadel, e: '', eDir: 'false', f: '', fDir: 'false', l3r3: '',
+    l3r3Dir: 'false', left: '', leftDir: 'false', right: '', rightDir: 'false'}
 - customName: false
   deviceClass: smartdrive
   deviceType: Drivetrain
@@ -23,22 +23,22 @@ robotConfig:
 - customName: true
   deviceClass: pneumatic
   deviceType: Pneumatic
-  name: pumpythingofdoom
+  name: pumpy_thing
   port: [7]
-  setting: {cylinder1: PINCLAW, cylinder1_reversed: 'false', cylinder2: BEAWCLAW,
+  setting: {cylinder1: pin_claw, cylinder1_reversed: 'false', cylinder2: beam_claw,
     cylinder2_reversed: 'false'}
 - customName: true
   deviceClass: motor_group
   deviceType: MotorGroup
-  name: pinclaw
+  name: pin_claw_arm
   port: [1, 10]
-  setting: {fwd: forward, motor_a_reversed: 'true', motor_b_reversed: 'false', rev: reverse}
+  setting: {fwd: forward, motor_a_reversed: 'false', motor_b_reversed: 'true', rev: reverse}
 - customName: true
   deviceClass: motor_group
   deviceType: MotorGroup
-  name: beamclaw
+  name: beam_claw_arm
   port: [8, 9]
-  setting: {fwd: forward, motor_a_reversed: 'true', motor_b_reversed: 'false', rev: reverse}
+  setting: {fwd: forward, motor_a_reversed: 'false', motor_b_reversed: 'true', rev: reverse}
 sdkVersion: 20230818.11.00.00
 slot: 0
 targetBrainGen: Second
@@ -53,7 +53,7 @@ workspace: |
     <block type="iq_events_when_started" id=".NsXwU_L.OuU1l7Sho$F" x="70" y="-10">
       <next>
         <block type="iq_motion_pneumatics_compressor" id="Y;OAyOttc#;YEDu:o1?C">
-          <field name="PNEUMATIC">pumpythingofdoom</field>
+          <field name="PNEUMATIC">pumpy_thing</field>
           <field name="STATE">on</field>
         </block>
       </next>
@@ -63,7 +63,7 @@ workspace: |
       <field name="EVENTTYPE">pressed</field>
       <next>
         <block type="iq_motion_spin" id="R*)P3%xs!}I!_U:f]18e">
-          <field name="MOTOR">pinclaw</field>
+          <field name="MOTOR">pin_claw_arm</field>
           <field name="DIRECTION">fwd</field>
         </block>
       </next>
@@ -73,36 +73,37 @@ workspace: |
       <field name="EVENTTYPE">released</field>
       <next>
         <block type="iq_motion_stop_motor" id="`1Z)r}EAs0wNtc4/|lC-">
-          <field name="MOTOR">pinclaw</field>
+          <field name="MOTOR">pin_claw_arm</field>
         </block>
       </next>
     </block>
-    <block type="iq_events_when_controller_button" id="1*Qh|]?Vt@,_I*,7U.x." x="190" y="390">
+    <block type="iq_events_when_controller_button" id="1*Qh|]?Vt@,_I*,7U.x." x="190" y="370">
       <field name="BUTTON">ButtonLDown</field>
       <field name="EVENTTYPE">pressed</field>
       <next>
-        <block type="iq_motion_spin" id="l#wCRA;RF|CT3nE^2B_0">
-          <field name="MOTOR">pinclaw</field>
-          <field name="DIRECTION">rev</field>
+        <block type="iq_motion_set_motor_velocity" id="(lM.X_O):WjKCpVfVFDc">
+          <field name="MOTOR">pin_claw_arm</field>
+          <field name="UNITS">pct</field>
+          <value name="VELOCITY">
+            <shadow type="math_number" id="RtGi8,+JI^r)It]l*M)}">
+              <field name="NUM">30</field>
+            </shadow>
+          </value>
+          <next>
+            <block type="iq_motion_spin" id="l#wCRA;RF|CT3nE^2B_0">
+              <field name="MOTOR">pin_claw_arm</field>
+              <field name="DIRECTION">rev</field>
+            </block>
+          </next>
         </block>
       </next>
     </block>
-    <block type="iq_events_when_controller_button" id="%(%.w)(SmMt~NAwV#i(u" x="710" y="390">
+    <block type="iq_events_when_controller_button" id="%(%.w)(SmMt~NAwV#i(u" x="650" y="370">
       <field name="BUTTON">ButtonLDown</field>
       <field name="EVENTTYPE">released</field>
       <next>
         <block type="iq_motion_stop_motor" id="fS_xOGzq;G6l=1}wW(U#">
-          <field name="MOTOR">pinclaw</field>
-        </block>
-      </next>
-    </block>
-    <block type="iq_events_when_controller_button" id="UG:{)vWU`_Q,=Gvlj;WJ" x="190" y="530">
-      <field name="BUTTON">ButtonRUp</field>
-      <field name="EVENTTYPE">pressed</field>
-      <next>
-        <block type="iq_motion_spin" id="2Xf9$%q16+NP5v?bFz`z">
-          <field name="MOTOR">beamclaw</field>
-          <field name="DIRECTION">fwd</field>
+          <field name="MOTOR">pin_claw_arm</field>
         </block>
       </next>
     </block>
@@ -111,7 +112,7 @@ workspace: |
       <field name="EVENTTYPE">released</field>
       <next>
         <block type="iq_motion_stop_motor" id="~U#q7HJU|l]52qxo3NoX">
-          <field name="MOTOR">beamclaw</field>
+          <field name="MOTOR">beam_claw_arm</field>
         </block>
       </next>
     </block>
@@ -120,8 +121,18 @@ workspace: |
       <field name="EVENTTYPE">pressed</field>
       <next>
         <block type="iq_motion_spin" id="jWoo[3?OX+pRXElO}cwi">
-          <field name="MOTOR">beamclaw</field>
+          <field name="MOTOR">beam_claw_arm</field>
           <field name="DIRECTION">rev</field>
+        </block>
+      </next>
+    </block>
+    <block type="iq_events_when_controller_button" id="UG:{)vWU`_Q,=Gvlj;WJ" x="30" y="710">
+      <field name="BUTTON">ButtonRUp</field>
+      <field name="EVENTTYPE">pressed</field>
+      <next>
+        <block type="iq_motion_spin" id="2Xf9$%q16+NP5v?bFz`z">
+          <field name="MOTOR">beam_claw_arm</field>
+          <field name="DIRECTION">fwd</field>
         </block>
       </next>
     </block>
@@ -130,7 +141,7 @@ workspace: |
       <field name="EVENTTYPE">released</field>
       <next>
         <block type="iq_motion_stop_motor" id="^f3,)ah}jC`FU!~Kkiw:">
-          <field name="MOTOR">beamclaw</field>
+          <field name="MOTOR">beam_claw_arm</field>
         </block>
       </next>
     </block>
@@ -139,7 +150,7 @@ workspace: |
       <field name="EVENTTYPE">pressed</field>
       <next>
         <block type="iq_motion_pneumatics_cylinder" id="-N5BSCtVvcmWly7!@7[z">
-          <field name="PNEUMATIC">pumpythingofdoom</field>
+          <field name="PNEUMATIC">pumpy_thing</field>
           <field name="CYLINDER">cylinder1</field>
           <field name="STATE">extend</field>
         </block>
@@ -150,7 +161,7 @@ workspace: |
       <field name="EVENTTYPE">released</field>
       <next>
         <block type="iq_motion_pneumatics_cylinder" id="z(?3TToN,`uXD6x8f824">
-          <field name="PNEUMATIC">pumpythingofdoom</field>
+          <field name="PNEUMATIC">pumpy_thing</field>
           <field name="CYLINDER">cylinder2</field>
           <field name="STATE">extend</field>
         </block>
@@ -161,7 +172,7 @@ workspace: |
       <field name="EVENTTYPE">pressed</field>
       <next>
         <block type="iq_motion_pneumatics_cylinder" id="P)QpJoAhZ2Ziq;;jZrJ2">
-          <field name="PNEUMATIC">pumpythingofdoom</field>
+          <field name="PNEUMATIC">pumpy_thing</field>
           <field name="CYLINDER">cylinder1</field>
           <field name="STATE">retract</field>
         </block>
@@ -172,7 +183,7 @@ workspace: |
       <field name="EVENTTYPE">released</field>
       <next>
         <block type="iq_motion_pneumatics_cylinder" id="=8CY[%KsO+APOobpub0-">
-          <field name="PNEUMATIC">pumpythingofdoom</field>
+          <field name="PNEUMATIC">pumpy_thing</field>
           <field name="CYLINDER">cylinder2</field>
           <field name="STATE">retract</field>
         </block>
