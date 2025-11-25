@@ -9,7 +9,7 @@ robotConfig:
   deviceClass: smartdrive
   deviceType: Drivetrain
   name: Drivetrain
-  port: [9, 12, null]
+  port: [9, 8, null]
   setting: {direction: fwd, gearRatio: 1:1, gyroType: none, thetaOffset: '0', type: 2-motor,
     unit: mm, wheelSize: 200mm, wheelbase: '76', wheelbaseUnit: mm, width: '173',
     xOffset: '0', yOffset: '0'}
@@ -53,11 +53,17 @@ robotConfig:
 - customName: false
   deviceClass: pneumatic
   deviceType: Pneumatic
-  name: Pneumatic8
-  port: [8]
+  name: Pneumatic7
+  port: [7]
   setting: {cylinder1: cylinder1, cylinder1_reversed: 'false', cylinder2: trapdoor,
     cylinder2_reversed: 'false'}
   triportSourcePort: 22
+- customName: true
+  deviceClass: optical
+  deviceType: Optical
+  name: SENSOR
+  port: [6]
+  setting: {}
 sdkVersion: 20230818.11.00.00
 slot: 0
 targetBrainGen: Second
@@ -70,47 +76,136 @@ workspace: |
       <variable id="_2.^beQjx|FGt38A,8(E">myVariable</variable>
       <variable id="#gibbOA{Pw$fx!j4uoxY">intake_button</variable>
     </variables>
-    <block type="iq_events_when_started" id=".NsXwU_L.OuU1l7Sho$F" x="70" y="-10">
+    <block type="iq_events_when_started" id=".NsXwU_L.OuU1l7Sho$F" x="110" y="-70">
       <next>
-        <block type="iq_motion_set_motor_velocity" id="Xqp,XwH|L2GG0IXbq//Y">
-          <field name="MOTOR">door</field>
-          <field name="UNITS">pct</field>
-          <value name="VELOCITY">
-            <shadow type="math_number" id="5ADG/-gvPaKIq~MuVBxa">
-              <field name="NUM">30</field>
+        <block type="iq_sensing_optical_set_light_power" id="qAHf3Ft:$qCPr@dU$A,F">
+          <field name="OPTICAL">SENSOR</field>
+          <value name="POWER">
+            <shadow type="math_number" id="D~bJvE`N~iAr1e.*?w~?">
+              <field name="NUM">50</field>
             </shadow>
           </value>
           <next>
-            <block type="iq_motion_pneumatics_compressor" id="OAXc489:9?@RhDC9k^,b">
-              <field name="PNEUMATIC">Pneumatic8</field>
-              <field name="STATE">on</field>
+            <block type="iq_motion_set_motor_velocity" id="Xqp,XwH|L2GG0IXbq//Y">
+              <field name="MOTOR">door</field>
+              <field name="UNITS">pct</field>
+              <value name="VELOCITY">
+                <shadow type="math_number" id="5ADG/-gvPaKIq~MuVBxa">
+                  <field name="NUM">30</field>
+                </shadow>
+              </value>
               <next>
-                <block type="iq_motion_set_motor_velocity" id="4_Zcho.N{[*-,;oRE$-:">
-                  <field name="MOTOR">revolver</field>
-                  <field name="UNITS">pct</field>
-                  <value name="VELOCITY">
-                    <shadow type="math_number" id="]-Q|..!r(Tv6;Px:xJ(0">
-                      <field name="NUM">100</field>
-                    </shadow>
-                  </value>
+                <block type="iq_motion_pneumatics_compressor" id="OAXc489:9?@RhDC9k^,b">
+                  <field name="PNEUMATIC">Pneumatic7</field>
+                  <field name="STATE">off</field>
                   <next>
-                    <block type="iq_motion_set_motor_velocity" id="7vFihpERjqiwvY*7l(1#">
-                      <field name="MOTOR">left_intake</field>
+                    <block type="iq_motion_set_motor_velocity" id="4_Zcho.N{[*-,;oRE$-:">
+                      <field name="MOTOR">revolver</field>
                       <field name="UNITS">pct</field>
                       <value name="VELOCITY">
-                        <shadow type="math_number" id="WW}@(-`0t~2th`T@EPTJ">
+                        <shadow type="math_number" id="]-Q|..!r(Tv6;Px:xJ(0">
                           <field name="NUM">100</field>
                         </shadow>
                       </value>
                       <next>
-                        <block type="iq_motion_set_motor_velocity" id="1uUJy{OgDc)y9e=_kfs5">
-                          <field name="MOTOR">right_intake</field>
+                        <block type="iq_motion_set_motor_velocity" id="7vFihpERjqiwvY*7l(1#">
+                          <field name="MOTOR">left_intake</field>
                           <field name="UNITS">pct</field>
                           <value name="VELOCITY">
-                            <shadow type="math_number" id="4!l/``T$t$fq_FX9%R+3">
+                            <shadow type="math_number" id="WW}@(-`0t~2th`T@EPTJ">
                               <field name="NUM">100</field>
                             </shadow>
                           </value>
+                          <next>
+                            <block type="iq_motion_set_motor_velocity" id="1uUJy{OgDc)y9e=_kfs5">
+                              <field name="MOTOR">right_intake</field>
+                              <field name="UNITS">pct</field>
+                              <value name="VELOCITY">
+                                <shadow type="math_number" id="4!l/``T$t$fq_FX9%R+3">
+                                  <field name="NUM">100</field>
+                                </shadow>
+                              </value>
+                              <next>
+                                <block type="iq_screen_set_font" id="0n^IrN8B[K%41Kq:*,/h">
+                                  <field name="FONT">MONO</field>
+                                  <field name="SIZE">12</field>
+                                  <next>
+                                    <block type="iq_control_forever" id="{rMQdJ[+gG;LO^X^NC=x">
+                                      <statement name="SUBSTACK">
+                                        <block type="iq_screen_set_cursor" id="2Ze]_yRQMh6tq,?Fa$3g">
+                                          <value name="ROW">
+                                            <shadow type="math_whole_number" id="mD}g]pBy[{tgjSj;^+Oo">
+                                              <field name="NUM">1</field>
+                                            </shadow>
+                                          </value>
+                                          <value name="COLUMN">
+                                            <shadow type="math_whole_number" id="HzZ$0/==.U{ce=m*;HQ_">
+                                              <field name="NUM">1</field>
+                                            </shadow>
+                                          </value>
+                                          <next>
+                                            <block type="iq_screen_clear_all_rows" id="|!gVyLXerB+%L-ZtkblP">
+                                              <next>
+                                                <block type="iq_control_if_then_else" id="Or^Ue|/_C)2{|wg8G5bV">
+                                                  <value name="CONDITION">
+                                                    <block type="iq_sensing_optical_found_object" id="v;E0rOIT@1he;Q]1OQf4">
+                                                      <field name="OPTICAL">SENSOR</field>
+                                                    </block>
+                                                  </value>
+                                                  <statement name="SUBSTACK">
+                                                    <block type="iq_screen_print" id="b{.hLwO=zGe5t9s_;UEV">
+                                                      <field name="andsetcursortonextrow_mutator">false</field>
+                                                      <value name="DATA">
+                                                        <shadow type="text" id="YG?bVyGve?uY+5X_G=sz">
+                                                          <field name="TEXT">hue </field>
+                                                        </shadow>
+                                                      </value>
+                                                      <next>
+                                                        <block type="iq_screen_print" id="EJngVS;zZ3+r@F0m@%x;">
+                                                          <field name="andsetcursortonextrow_mutator">true</field>
+                                                          <value name="DATA">
+                                                            <shadow type="text" id="yuEmjA:(Nvy|L8x42X4P">
+                                                              <field name="TEXT">VEXcode</field>
+                                                            </shadow>
+                                                            <block type="iq_sensing_optical_hue" id="@NNMEh;lF$=VjGKH8ppm">
+                                                              <field name="OPTICAL">SENSOR</field>
+                                                            </block>
+                                                          </value>
+                                                        </block>
+                                                      </next>
+                                                    </block>
+                                                  </statement>
+                                                  <statement name="SUBSTACK2">
+                                                    <block type="iq_screen_print" id="nJOR(QgxX{ynYA5i/D4q">
+                                                      <field name="andsetcursortonextrow_mutator">false</field>
+                                                      <value name="DATA">
+                                                        <shadow type="text" id="vfc)F+!.)q?#RmqkNFfW">
+                                                          <field name="TEXT">me want pin</field>
+                                                        </shadow>
+                                                      </value>
+                                                    </block>
+                                                  </statement>
+                                                  <next>
+                                                    <block type="iq_control_wait" id="]}|kQE!vjiuv}*.WK2)~">
+                                                      <value name="DURATION">
+                                                        <shadow type="math_positive_number" id="N2sgt6SZDo{a%9nk8C-V">
+                                                          <field name="NUM">0.1</field>
+                                                        </shadow>
+                                                      </value>
+                                                    </block>
+                                                  </next>
+                                                </block>
+                                              </next>
+                                            </block>
+                                          </next>
+                                        </block>
+                                      </statement>
+                                    </block>
+                                  </next>
+                                </block>
+                              </next>
+                            </block>
+                          </next>
                         </block>
                       </next>
                     </block>
@@ -122,29 +217,7 @@ workspace: |
         </block>
       </next>
     </block>
-    <block type="iq_events_when_controller_button" id="63k^EUSK}d3spqWE54_5" x="930" y="30">
-      <field name="BUTTON">ButtonEUp</field>
-      <field name="EVENTTYPE">pressed</field>
-      <next>
-        <block type="iq_motion_pneumatics_cylinder" id="4_M1_a;eKwgOCZ8OBsY:">
-          <field name="PNEUMATIC">Pneumatic8</field>
-          <field name="CYLINDER">cylinder2</field>
-          <field name="STATE">extend</field>
-        </block>
-      </next>
-    </block>
-    <block type="iq_events_when_controller_button" id="wz%=25)dSmGV7sgMzVYi" x="930" y="170">
-      <field name="BUTTON">ButtonEDown</field>
-      <field name="EVENTTYPE">pressed</field>
-      <next>
-        <block type="iq_motion_pneumatics_cylinder" id="fB)x!In2A]:^(jj|BV)[">
-          <field name="PNEUMATIC">Pneumatic8</field>
-          <field name="CYLINDER">cylinder2</field>
-          <field name="STATE">retract</field>
-        </block>
-      </next>
-    </block>
-    <block type="iq_events_when_controller_button" id="yW6]j=%W{r?AzP?r~swz" x="70" y="310">
+    <block type="iq_events_when_controller_button" id="yW6]j=%W{r?AzP?r~swz" x="590" y="-90">
       <field name="BUTTON">ButtonLUp</field>
       <field name="EVENTTYPE">pressed</field>
       <next>
@@ -160,7 +233,18 @@ workspace: |
         </block>
       </next>
     </block>
-    <block type="iq_events_when_controller_button" id="j$M}CP;0?%x4i_g2FN,H" x="630" y="350">
+    <block type="iq_events_when_controller_button" id="63k^EUSK}d3spqWE54_5" x="930" y="30">
+      <field name="BUTTON">ButtonEUp</field>
+      <field name="EVENTTYPE">pressed</field>
+      <next>
+        <block type="iq_motion_pneumatics_cylinder" id="4_M1_a;eKwgOCZ8OBsY:">
+          <field name="PNEUMATIC">Pneumatic7</field>
+          <field name="CYLINDER">cylinder2</field>
+          <field name="STATE">extend</field>
+        </block>
+      </next>
+    </block>
+    <block type="iq_events_when_controller_button" id="j$M}CP;0?%x4i_g2FN,H" x="590" y="150">
       <field name="BUTTON">ButtonLDown</field>
       <field name="EVENTTYPE">pressed</field>
       <next>
@@ -192,6 +276,81 @@ workspace: |
               </next>
             </block>
           </statement>
+        </block>
+      </next>
+    </block>
+    <block type="iq_events_when_controller_button" id="wz%=25)dSmGV7sgMzVYi" x="930" y="170">
+      <field name="BUTTON">ButtonEDown</field>
+      <field name="EVENTTYPE">pressed</field>
+      <next>
+        <block type="iq_motion_pneumatics_cylinder" id="fB)x!In2A]:^(jj|BV)[">
+          <field name="PNEUMATIC">Pneumatic7</field>
+          <field name="CYLINDER">cylinder2</field>
+          <field name="STATE">retract</field>
+        </block>
+      </next>
+    </block>
+    <block type="iq_sensing_optical_detect" id="6{nN5dKrSe.;vx/7r+}o" x="750" y="570">
+      <field name="OPTICAL">SENSOR</field>
+      <field name="COLORS">red</field>
+    </block>
+    <block type="iq_console_print" id="7V]74D23qR;#S,]_nc|I" x="850" y="710">
+      <field name="andsetcursortonextrow_mutator">false</field>
+      <value name="DATA">
+        <shadow type="text" id="UWU+EWBLi9E#!ZqA^6d$">
+          <field name="TEXT">is it red</field>
+        </shadow>
+      </value>
+      <next>
+        <block type="iq_console_print" id="-*}%@QYCLe;q%6]x}!!%">
+          <field name="andsetcursortonextrow_mutator">true</field>
+          <value name="DATA">
+            <shadow type="text" id="kc|P8GVJ*,zZ%s;SCh]r">
+              <field name="TEXT"/>
+            </shadow>
+            <block type="iq_sensing_optical_detect" id="^ceX9D{xilT?X(L)[oRB">
+              <field name="OPTICAL">SENSOR</field>
+              <field name="COLORS">red</field>
+            </block>
+          </value>
+          <next>
+            <block type="iq_console_print" id="v)P.JYo,HCxnVmKl[_f-">
+              <field name="andsetcursortonextrow_mutator">false</field>
+              <value name="DATA">
+                <shadow type="text" id="~2#jlR-g*w%li$JA)z{y">
+                  <field name="TEXT">is pin in intake</field>
+                </shadow>
+              </value>
+              <next>
+                <block type="iq_console_print" id="bbmuuycqsgm~rdZ%ud=y">
+                  <field name="andsetcursortonextrow_mutator">true</field>
+                  <value name="DATA">
+                    <shadow type="text" id="x-ZX3GlCH62/LOdc*j$M">
+                      <field name="TEXT"/>
+                    </shadow>
+                  </value>
+                </block>
+              </next>
+            </block>
+          </next>
+        </block>
+      </next>
+    </block>
+    <block type="iq_screen_print" id="pETaZ7zi4|4dEReWr{i+" x="190" y="930">
+      <field name="andsetcursortonextrow_mutator">false</field>
+      <value name="DATA">
+        <shadow type="text" id="CbY5g5Iw3T;hi6cXza#+">
+          <field name="TEXT">is pin in intake</field>
+        </shadow>
+      </value>
+      <next>
+        <block type="iq_screen_print" id="B+*u=IU|6HYn)D_iAl#i">
+          <field name="andsetcursortonextrow_mutator">true</field>
+          <value name="DATA">
+            <shadow type="text" id="LtP]~LA#(!Jr4b]2#N=%">
+              <field name="TEXT"/>
+            </shadow>
+          </value>
         </block>
       </next>
     </block>
