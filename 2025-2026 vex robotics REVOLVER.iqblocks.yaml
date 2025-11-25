@@ -68,6 +68,7 @@ workspace: |
   <xml xmlns="https://developers.google.com/blockly/xml">
     <variables>
       <variable id="_2.^beQjx|FGt38A,8(E">myVariable</variable>
+      <variable id="#gibbOA{Pw$fx!j4uoxY">intake_button</variable>
     </variables>
     <block type="iq_events_when_started" id=".NsXwU_L.OuU1l7Sho$F" x="70" y="-10">
       <next>
@@ -89,7 +90,7 @@ workspace: |
                   <field name="UNITS">pct</field>
                   <value name="VELOCITY">
                     <shadow type="math_number" id="]-Q|..!r(Tv6;Px:xJ(0">
-                      <field name="NUM">40</field>
+                      <field name="NUM">100</field>
                     </shadow>
                   </value>
                   <next>
@@ -159,17 +160,38 @@ workspace: |
         </block>
       </next>
     </block>
-    <block type="iq_events_when_controller_button" id="j$M}CP;0?%x4i_g2FN,H" x="530" y="330">
+    <block type="iq_events_when_controller_button" id="j$M}CP;0?%x4i_g2FN,H" x="630" y="350">
       <field name="BUTTON">ButtonLDown</field>
       <field name="EVENTTYPE">pressed</field>
       <next>
-        <block type="iq_motion_stop_motor" id="DZ]M+axeEsxXOKDvF6QK">
-          <field name="MOTOR">right_intake</field>
-          <next>
-            <block type="iq_motion_stop_motor" id="Woz:|e]F$+bIz:r_zqh1">
+        <block type="iq_control_if_then_else" id="v]FLAY^2X}L/:xoGV3}P">
+          <value name="CONDITION">
+            <block type="iq_sensing_motor_is_spinning" id="%ud!8JZUNWQDH}3t#LaV">
               <field name="MOTOR">left_intake</field>
             </block>
-          </next>
+          </value>
+          <statement name="SUBSTACK">
+            <block type="iq_motion_stop_motor" id="DZ]M+axeEsxXOKDvF6QK">
+              <field name="MOTOR">right_intake</field>
+              <next>
+                <block type="iq_motion_stop_motor" id="Woz:|e]F$+bIz:r_zqh1">
+                  <field name="MOTOR">left_intake</field>
+                </block>
+              </next>
+            </block>
+          </statement>
+          <statement name="SUBSTACK2">
+            <block type="iq_motion_spin" id="`yS9@-VuMi4Ae.:S0Gly">
+              <field name="MOTOR">right_intake</field>
+              <field name="DIRECTION">rev</field>
+              <next>
+                <block type="iq_motion_spin" id="W^Q/YJC@G_E:rWaw9)^0">
+                  <field name="MOTOR">left_intake</field>
+                  <field name="DIRECTION">rev</field>
+                </block>
+              </next>
+            </block>
+          </statement>
         </block>
       </next>
     </block>
