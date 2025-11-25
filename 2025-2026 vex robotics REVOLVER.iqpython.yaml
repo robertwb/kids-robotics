@@ -1,0 +1,309 @@
+aiVisionSettings:
+  AIObjectModel: []
+  AIObjects: true
+  aiModelDropDownValue: null
+  codes: []
+  colors: []
+  tags: true
+appVersion: 4.62.0
+fileFormat: 2.0.0
+hardwareTarget: brain
+minVersion: 4.60.0
+mode: Text
+platform: IQ
+robotConfig:
+- customName: false
+  deviceClass: smartdrive
+  deviceType: Drivetrain
+  name: drivetrain
+  port: [9, 8, null]
+  setting: {direction: fwd, gearRatio: 1:1, gyroType: none, thetaOffset: '0', type: 2-motor,
+    unit: mm, wheelSize: 200mm, wheelbase: '76', wheelbaseUnit: mm, width: '173',
+    xOffset: '0', yOffset: '0'}
+  triportSourcePort: 22
+- customName: true
+  deviceClass: motor
+  deviceType: Motor
+  name: left_intake
+  port: [4]
+  setting: {fwd: forward, rev: reverse, reversed: 'false'}
+  triportSourcePort: 22
+- customName: true
+  deviceClass: motor
+  deviceType: Motor
+  name: right_intake
+  port: [5]
+  setting: {fwd: forward, rev: reverse, reversed: 'true'}
+  triportSourcePort: 22
+- customName: false
+  deviceClass: controller
+  deviceType: Controller
+  name: controller
+  port: []
+  setting: {drive: arcadel, e: '', eDir: 'false', f: door, fDir: 'false', l3r3: '',
+    l3r3Dir: 'false', left: '', leftDir: 'false', right: revolver, rightDir: 'false'}
+  triportSourcePort: 22
+- customName: true
+  deviceClass: motor
+  deviceType: Motor
+  name: revolver
+  port: [2]
+  setting: {fwd: forward, rev: reverse, reversed: 'false'}
+  triportSourcePort: 22
+- customName: true
+  deviceClass: motor
+  deviceType: Motor
+  name: door
+  port: [3]
+  setting: {fwd: forward, rev: reverse, reversed: 'false'}
+  triportSourcePort: 22
+- customName: false
+  deviceClass: pneumatic
+  deviceType: Pneumatic
+  name: pneumatic_7
+  port: [7]
+  setting: {cylinder1: cylinder1, cylinder1_reversed: 'false', cylinder2: trapdoor,
+    cylinder2_reversed: 'false'}
+  triportSourcePort: 22
+- customName: true
+  deviceClass: optical
+  deviceType: Optical
+  name: SENSOR
+  port: [6]
+  setting: {}
+  triportSourcePort: 22
+sdkVersion: 20230818.11.00.00
+slot: 0
+target: Physical
+targetBrainGen: Second
+textContent: |
+  #region VEXcode Generated Robot Configuration
+  from vex import *
+  import urandom
+  import math
+
+  # Brain should be defined by default
+  brain=Brain()
+
+  # Robot configuration code
+  brain_inertial = Inertial()
+  left_drive_smart = Motor(Ports.PORT9, 1.0, False)
+  right_drive_smart = Motor(Ports.PORT8, 1.0, True)
+  drivetrain = DriveTrain(left_drive_smart, right_drive_smart, 200, 173, 76, MM, 1)
+  left_intake = Motor(Ports.PORT4, False)
+  right_intake = Motor(Ports.PORT5, True)
+  controller = Controller()
+  revolver = Motor(Ports.PORT2, False)
+  door = Motor(Ports.PORT3, False)
+  pneumatic_7 = Pneumatic(Ports.PORT7)
+  SENSOR = Optical(Ports.PORT6)
+
+
+
+  # generating and setting random seed
+  def initializeRandomSeed():
+      wait(100, MSEC)
+      xaxis = brain_inertial.acceleration(XAXIS) * 1000
+      yaxis = brain_inertial.acceleration(YAXIS) * 1000
+      zaxis = brain_inertial.acceleration(ZAXIS) * 1000
+      systemTime = brain.timer.system() * 100
+      urandom.seed(int(xaxis + yaxis + zaxis + systemTime)) 
+      
+  # Initialize random seed 
+  initializeRandomSeed()
+
+
+  # Color to String Helper
+  def convert_color_to_string(col):
+      if col == Color.RED:
+          return "red"
+      if col == Color.GREEN:
+          return "green"
+      if col == Color.BLUE:
+          return "blue"
+      if col == Color.WHITE:
+          return "white"
+      if col == Color.YELLOW:
+          return "yellow"
+      if col == Color.ORANGE:
+          return "orange"
+      if col == Color.PURPLE:
+          return "purple"
+      if col == Color.CYAN:
+          return "cyan"
+      if col == Color.RED_VIOLET:
+          return "red_violet"
+      if col == Color.VIOLET:
+          return "violet"
+      if col == Color.BLUE_VIOLET:
+          return "blue_violet"
+      if col == Color.BLUE_GREEN:
+          return "blue_green"
+      if col == Color.YELLOW_GREEN:
+          return "yellow_green"
+      if col == Color.YELLOW_ORANGE:
+          return "yellow_orange"
+      if col == Color.RED_ORANGE:
+          return "red_orange"
+      if col == Color.BLACK:
+          return "black"
+      if col == Color.TRANSPARENT:
+          return "transparent"
+      return ""
+
+
+  # define variables used for controlling motors based on controller inputs
+  controller_right_shoulder_control_motors_stopped = True
+  f_buttons_control_motors_stopped = True
+  drivetrain_needs_to_be_stopped_controller = False
+
+  # define a task that will handle monitoring inputs from controller
+  def rc_auto_loop_function_controller():
+      global drivetrain_needs_to_be_stopped_controller, controller_right_shoulder_control_motors_stopped, f_buttons_control_motors_stopped, remote_control_code_enabled
+      # process the controller input every 20 milliseconds
+      # update the motors based on the input values
+      while True:
+          if remote_control_code_enabled:
+              
+              # calculate the drivetrain motor velocities from the controller joystick axies
+              # left = axisA + axisB
+              # right = axisA - axisB
+              drivetrain_left_side_speed = controller.axisA.position() + controller.axisB.position()
+              drivetrain_right_side_speed = controller.axisA.position() - controller.axisB.position()
+              
+              # check if the values are inside of the deadband range
+              if abs(drivetrain_left_side_speed) < 5 and abs(drivetrain_right_side_speed) < 5:
+                  # check if the motors have already been stopped
+                  if drivetrain_needs_to_be_stopped_controller:
+                      # stop the drive motors
+                      left_drive_smart.stop()
+                      right_drive_smart.stop()
+                      # tell the code that the motors have been stopped
+                      drivetrain_needs_to_be_stopped_controller = False
+              else:
+                  # reset the toggle so that the deadband code knows to stop the motors next
+                  # time the input is in the deadband range
+                  drivetrain_needs_to_be_stopped_controller = True
+              
+              # only tell the left drive motor to spin if the values are not in the deadband range
+              if drivetrain_needs_to_be_stopped_controller:
+                  left_drive_smart.set_velocity(drivetrain_left_side_speed, PERCENT)
+                  left_drive_smart.spin(FORWARD)
+              # only tell the right drive motor to spin if the values are not in the deadband range
+              if drivetrain_needs_to_be_stopped_controller:
+                  right_drive_smart.set_velocity(drivetrain_right_side_speed, PERCENT)
+                  right_drive_smart.spin(FORWARD)
+              # check the buttonRUp/buttonRDown status
+              # to control revolver
+              if controller.buttonRUp.pressing():
+                  revolver.spin(FORWARD)
+                  controller_right_shoulder_control_motors_stopped = False
+              elif controller.buttonRDown.pressing():
+                  revolver.spin(REVERSE)
+                  controller_right_shoulder_control_motors_stopped = False
+              elif not controller_right_shoulder_control_motors_stopped:
+                  revolver.stop()
+                  # set the toggle so that we don't constantly tell the motor to stop when
+                  # the buttons are released
+                  controller_right_shoulder_control_motors_stopped = True
+              # check the buttonFUp/buttonFDown status
+              # to control door
+              if controller.buttonFUp.pressing():
+                  door.spin(FORWARD)
+                  f_buttons_control_motors_stopped = False
+              elif controller.buttonFDown.pressing():
+                  door.spin(REVERSE)
+                  f_buttons_control_motors_stopped = False
+              elif not f_buttons_control_motors_stopped:
+                  door.stop()
+                  # set the toggle so that we don't constantly tell the motor to stop when
+                  # the buttons are released
+                  f_buttons_control_motors_stopped = True
+          # wait before repeating the process
+          wait(20, MSEC)
+
+  # define variable for remote controller enable/disable
+  remote_control_code_enabled = True
+
+  rc_auto_loop_thread_controller = Thread(rc_auto_loop_function_controller)
+
+  #endregion VEXcode Generated Robot Configuration
+
+  screen_precision = 0
+  console_precision = 0
+  myVariable = 0
+  is_intake_spinning = 0
+
+  def when_started1():
+      global myVariable, is_intake_spinning, screen_precision, console_precision
+      is_intake_spinning = 0
+      SENSOR.set_light_power(50, PERCENT)
+      door.set_velocity(30, PERCENT)
+      pneumatic_7.pump_off()
+      revolver.set_velocity(100, PERCENT)
+      left_intake.set_velocity(100, PERCENT)
+      right_intake.set_velocity(100, PERCENT)
+      brain.screen.set_font(FontType.MONO12)
+      while True:
+          brain.screen.set_cursor(1, 1)
+          brain.screen.clear_screen()
+          if SENSOR.is_near_object():
+              brain.screen.print(get_pin_color(SENSOR.hue()))
+              brain.screen.print(" ", SENSOR.hue(), precision=screen_precision)
+              brain.screen.next_row()
+          else:
+              brain.screen.print("me want pin")
+              brain.screen.next_row()
+          # do not take wait time away
+          wait(50, MSEC)
+
+  def controllerbuttonLUp_pressed_callback_0():
+      global myVariable, is_intake_spinning, screen_precision, console_precision
+      if is_intake_spinning == 1:
+          is_intake_spinning = 0
+          right_intake.stop()
+          left_intake.stop()
+      else:
+          is_intake_spinning = 1
+          right_intake.spin(FORWARD)
+          left_intake.spin(FORWARD)
+
+  def controllerbuttonEUp_pressed_callback_0():
+      global myVariable, is_intake_spinning, screen_precision, console_precision
+      pneumatic_7.extend(CYLINDER2)
+
+  def controllerbuttonEDown_pressed_callback_0():
+      global myVariable, is_intake_spinning, screen_precision, console_precision
+      pneumatic_7.retract(CYLINDER2)
+
+  def controllerbuttonLDown_pressed_callback_0():
+      global myVariable, is_intake_spinning, screen_precision, console_precision
+      if is_intake_spinning == 1:
+          is_intake_spinning = 0
+          right_intake.stop()
+          left_intake.stop()
+      else:
+          is_intake_spinning = 1
+          right_intake.spin(REVERSE)
+          left_intake.spin(REVERSE)
+
+  def get_pin_color(hue):
+    if hue<20:
+      return "red"
+    elif hue<100:
+      return "yellow"
+    else:
+      return "blue"  
+
+
+  # system event handlers
+  controller.buttonLUp.pressed(controllerbuttonLUp_pressed_callback_0)
+  controller.buttonEUp.pressed(controllerbuttonEUp_pressed_callback_0)
+  controller.buttonEDown.pressed(controllerbuttonEDown_pressed_callback_0)
+  controller.buttonLDown.pressed(controllerbuttonLDown_pressed_callback_0)
+  # add 15ms delay to make sure events are registered correctly.
+  wait(15, MSEC)
+
+  when_started1()
+textLanguage: python
+v5SoundsEnabled: false
