@@ -10,6 +10,7 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('filename')
   parser.add_argument('--date')
+  parser.add_argument('--author', default='Bradshaw Kids <robertwb+kids@gmail.com>')
   args = parser.parse_args()
 
   path = args.filename
@@ -19,5 +20,5 @@ if __name__ == '__main__':
   with open(basename, 'w') as fout:
     fout.write(content)
   subprocess.check_call(
-      ['git', 'commit', basename],
+      ['git', 'commit', basename, '--author=' + args.author],
       env={**os.environ, **{'GIT_AUTHOR_DATE': args.date, 'GIT_COMMITTER_DATE': args.date}})
