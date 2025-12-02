@@ -19,6 +19,7 @@ if __name__ == '__main__':
   basename = re.sub(r' [(]\d+[)]', '', os.path.basename(path)) + '.yaml'
   with open(basename, 'w') as fout:
     fout.write(content)
+  subprocess.check_call(['git', 'diff', basename])
   subprocess.check_call(
       ['git', 'commit', basename, '--author=' + args.author],
       env={**os.environ, **{'GIT_AUTHOR_DATE': args.date, 'GIT_COMMITTER_DATE': args.date}})
