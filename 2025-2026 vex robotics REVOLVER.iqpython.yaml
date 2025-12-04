@@ -237,7 +237,7 @@ textContent: |
   start_position = revolver.position(TURNS)
 
   def current_chamber():
-      quarter_turns = math.round((revolver.position(TURNS) - start_position ) / 5 / 4)
+      quarter_turns = math.floor(0.5 + (revolver.position(TURNS) - start_position ) / 5 / 4)
       # the next line is clock arithmetic so quarter_turns goes like 0 < 1 < 2 < 3 < 4 = 0
       return quarter_turns % 4
 
@@ -248,7 +248,7 @@ textContent: |
       elif dif == 2:
           revolver.spin_for(REVERSE, 5.0/2, TURNS)
       elif dif == 3:
-          revolver.spin(FORWARD, 5.0/4 TURNS)
+          revolver.spin_for(FORWARD, 5.0/4, TURNS)
 
   def which_chamber(color):
       for i in range(4):
@@ -258,7 +258,27 @@ textContent: |
       brain.play_sound(SoundType.SIREN)
       return -1
 
-
+  def eat_pin():
+      color = get_pin_color(SENSOR.hue())
+      if color == "red":
+          brain.play_note(4, 0)
+      if color == "yellow":
+          brain.play_note(4, 1)
+      if color == "blue":
+          brain.play_note(4, 2)
+      where_to_put_pin = which_chamber(color)
+      brain.screen.print("where_to_put_pin", color, where_to_put_pin)
+      brain.screen.next_row()
+      for i in range(4):
+          brain.screen.print(i, chambers [i])
+          brain.screen.next_row()
+      if where_to_put_pin == -1:
+          wait(0.3,SECONDS)
+          return
+      move_to_chamber(where_to_put_pin)
+      chambers [where_to_put_pin].append(color)
+      brain.screen.print(chambers)
+      wait(1,SECONDS)
 
   def epmty_chambers():
       global chambers
@@ -268,7 +288,7 @@ textContent: |
   def when_started1():
       global myVariable, is_intake_spinning, screen_precision, console_precision
       is_intake_spinning = 0
-      SENSOR.set_light_power(50, PERCENT)
+      SENSOR.set_light_power(80, PERCENT)
       door.set_velocity(30, PERCENT)
       pneumatic_7.pump_off()
       revolver.set_velocity(100, PERCENT)
@@ -276,15 +296,15 @@ textContent: |
       right_intake.set_velocity(100, PERCENT)
       brain.screen.set_font(FontType.MONO12)
       while True:
-          brain.screen.set_cursor(1, 1)
-          brain.screen.clear_screen()
+          
           if SENSOR.is_near_object():
+              brain.screen.set_cursor(1, 1)
+              brain.screen.clear_screen()
+              wait(0.2,SECONDS)
               brain.screen.print(get_pin_color(SENSOR.hue()))
               brain.screen.print(" ", SENSOR.hue(), precision=screen_precision)
               brain.screen.next_row()
-          else:
-              brain.screen.print("me want pin")
-              brain.screen.next_row()
+              eat_pin()
           # do not take wait time away
           wait(50, MSEC)
 
