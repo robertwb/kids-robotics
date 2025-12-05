@@ -237,18 +237,18 @@ textContent: |
   start_position = revolver.position(TURNS)
 
   def current_chamber():
-      quarter_turns = math.floor(0.5 + (revolver.position(TURNS) - start_position ) / 5 / 4)
+      quarter_turns = math.floor(0.5 + (revolver.position(TURNS) - start_position ) / 5 * 4)
       # the next line is clock arithmetic so quarter_turns goes like 0 < 1 < 2 < 3 < 4 = 0
       return quarter_turns % 4
 
   def move_to_chamber(chamber_number):
       dif = (chamber_number - current_chamber()) % 4
       if dif == 1:
-          revolver.spin_for(REVERSE, 5.0/4,TURNS)
+          revolver.spin_for(FORWARD, 5.0/4,TURNS)
       elif dif == 2:
-          revolver.spin_for(REVERSE, 5.0/2, TURNS)
+          revolver.spin_for(FORWARD, 5.0/2, TURNS)
       elif dif == 3:
-          revolver.spin_for(FORWARD, 5.0/4, TURNS)
+          revolver.spin_for(REVERSE, 5.0/4, TURNS)
 
   def which_chamber(color):
       for i in range(4):
@@ -276,6 +276,8 @@ textContent: |
           wait(0.3,SECONDS)
           return
       move_to_chamber(where_to_put_pin)
+      brain.screen.print("on chamber ", current_chamber())
+      brain.screen.next_row()
       chambers [where_to_put_pin].append(color)
       brain.screen.print(chambers)
       wait(1,SECONDS)
