@@ -21,5 +21,6 @@ if __name__ == '__main__':
     fout.write(content)
   subprocess.check_call(['git', 'diff', basename])
   subprocess.check_call(
-      ['git', 'commit', basename, '--author=' + args.author],
-      env={**os.environ, **{'GIT_AUTHOR_DATE': args.date, 'GIT_COMMITTER_DATE': args.date}})
+      ['git', 'commit', basename,
+        '--author=' + args.author,
+        '--date=' + args.date])
