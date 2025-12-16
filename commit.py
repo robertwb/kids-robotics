@@ -22,5 +22,5 @@ if __name__ == '__main__':
   subprocess.check_call(['git', 'diff', basename])
   subprocess.check_call(
       ['git', 'commit', basename,
-        '--author=' + args.author,
-        '--date=' + args.date])
+        '--author=' + args.author]
+         + (['--date=' + args.date] if args.date else []))
