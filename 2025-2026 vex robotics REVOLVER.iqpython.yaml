@@ -272,6 +272,10 @@ textContent: |-
   def epmty_chambers():
       global chambers
       chambers = [[], [], [], []]
+      brain.play_note(4, 3, 670)
+      brain.screen.clear_screen()
+      
+
       
 
   def when_started1():
@@ -355,10 +359,18 @@ textContent: |-
           revolver.spin(FORWARD)
 
   def chamber_reset():
-      global start_position
       epmty_chambers()
-      start_position = revolver.position(TURNS)
 
+
+  is_pump_on = False
+  def pneumatic_toggle():
+      global is_pump_on
+      if is_pump_on:
+          pneumatic_7.pump_off()
+          is_pump_on = False
+      else:
+          pneumatic_7.pump_on()
+          is_pump_on = True
 
   # system event handlers
   controller.buttonLUp.pressed(intake_in)
@@ -367,6 +379,7 @@ textContent: |-
   controller.buttonLDown.pressed(intake_out)
   controller.buttonFUp.pressed(chamber_reset)
   controller.axisC.changed(revolver_spin)
+  controller.buttonFDown.pressed(pneumatic_toggle)
   # add 15ms delay to make sure events are registered correctly.
   wait(15, MSEC)
 
