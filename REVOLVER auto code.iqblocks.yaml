@@ -150,6 +150,25 @@ workspace: |
                                               <next>
                                                 <block type="procedures_call" id="N0R?%y=x]ma#a#G}2mnS">
                                                   <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="eject" proceduredefid="t7%^y2[/}FXN}8lGqiKA" argumentids="[]" warp="false"/>
+                                                  <next>
+                                                    <block type="iq_drivetrain_drive_for" id="EqBH+2dLJ]9Wb#;yN0`X">
+                                                      <field name="DIRECTION">fwd</field>
+                                                      <field name="UNITS">in</field>
+                                                      <field name="anddontwait_mutator">false</field>
+                                                      <value name="AMOUNT">
+                                                        <shadow type="math_number" id="z#;.nXFy`)d#$.f69$k9">
+                                                          <field name="NUM">10</field>
+                                                        </shadow>
+                                                      </value>
+                                                      <next>
+                                                        <block type="iq_motion_pneumatics_cylinder" id="P4?1CejZHu%*v+i9iN1E">
+                                                          <field name="PNEUMATIC">Pneumatic7</field>
+                                                          <field name="CYLINDER">cylinder2</field>
+                                                          <field name="STATE">extend</field>
+                                                        </block>
+                                                      </next>
+                                                    </block>
+                                                  </next>
                                                 </block>
                                               </next>
                                             </block>
@@ -173,14 +192,6 @@ workspace: |
         </block>
       </next>
     </block>
-    <block type="iq_sensing_optical_set_light_power" id="qAHf3Ft:$qCPr@dU$A,F" x="650" y="-10">
-      <field name="OPTICAL">SENSOR</field>
-      <value name="POWER">
-        <shadow type="math_number" id="D~bJvE`N~iAr1e.*?w~?">
-          <field name="NUM">50</field>
-        </shadow>
-      </value>
-    </block>
     <block type="procedures_definition" id="YeVN8^,ixK.:IpIN5)-=" x="810" y="90">
       <statement name="custom_block">
         <shadow type="procedures_prototype" id="t7%^y2[/}FXN}8lGqiKA">
@@ -201,76 +212,28 @@ workspace: |
           <next>
             <block type="iq_motion_pneumatics_cylinder" id="]F.0im%tS6s`RIS$|uM1">
               <field name="PNEUMATIC">Pneumatic7</field>
-              <field name="CYLINDER">cylinder1</field>
+              <field name="CYLINDER">cylinder2</field>
               <field name="STATE">retract</field>
               <next>
-                <block type="iq_motion_spin_for" id="ZT?m@8ER(BaUL^1R9iY}">
-                  <field name="MOTOR">door</field>
-                  <field name="DIRECTION">fwd</field>
-                  <field name="UNITS">deg</field>
-                  <field name="anddontwait_mutator">false</field>
-                  <value name="AMOUNT">
-                    <shadow type="math_number" id="@NdNV;r^odbmES|;-lrU">
-                      <field name="NUM">270</field>
+                <block type="iq_control_wait" id="XIo8/P_]J7Dq[I[ylI_N">
+                  <value name="DURATION">
+                    <shadow type="math_positive_number" id="+9.XA@u4.UzAI})BEpTp">
+                      <field name="NUM">1</field>
                     </shadow>
                   </value>
                   <next>
-                    <block type="iq_drivetrain_drive_for" id="EqBH+2dLJ]9Wb#;yN0`X">
+                    <block type="iq_motion_spin_for" id="ZT?m@8ER(BaUL^1R9iY}">
+                      <field name="MOTOR">door</field>
                       <field name="DIRECTION">fwd</field>
-                      <field name="UNITS">in</field>
+                      <field name="UNITS">deg</field>
                       <field name="anddontwait_mutator">false</field>
                       <value name="AMOUNT">
-                        <shadow type="math_number" id="z#;.nXFy`)d#$.f69$k9">
-                          <field name="NUM">5</field>
+                        <shadow type="math_number" id="@NdNV;r^odbmES|;-lrU">
+                          <field name="NUM">260</field>
                         </shadow>
                       </value>
                     </block>
                   </next>
-                </block>
-              </next>
-            </block>
-          </next>
-        </block>
-      </next>
-    </block>
-    <block type="iq_drivetrain_drive_for" id="/ek@Y7w!$P)qWLP*D%fh" x="1130" y="490">
-      <field name="DIRECTION">fwd</field>
-      <field name="UNITS">in</field>
-      <field name="anddontwait_mutator">false</field>
-      <value name="AMOUNT">
-        <shadow type="math_number" id="3uHJ`T)c4jMrPBAmi[i#">
-          <field name="NUM">12</field>
-        </shadow>
-      </value>
-      <next>
-        <block type="iq_drivetrain_turn_for" id=")}(h])woS,sggN%J{78#">
-          <field name="TURNDIRECTION">left</field>
-          <field name="anddontwait_mutator">false</field>
-          <value name="AMOUNT">
-            <shadow type="math_number" id="olm|e4wSB^`8GB98-xWL">
-              <field name="NUM">22.5</field>
-            </shadow>
-          </value>
-          <next>
-            <block type="iq_drivetrain_drive_for" id="U[4}`%k@j,UQu;B(Y?mb">
-              <field name="DIRECTION">rev</field>
-              <field name="UNITS">in</field>
-              <field name="anddontwait_mutator">false</field>
-              <value name="AMOUNT">
-                <shadow type="math_number" id="y@SW!pt:?lA_m96D^zQn">
-                  <field name="NUM">18</field>
-                </shadow>
-              </value>
-              <next>
-                <block type="iq_drivetrain_drive_for" id="Y_O90B|sJaEJ*MODLbj;">
-                  <field name="DIRECTION">fwd</field>
-                  <field name="UNITS">in</field>
-                  <field name="anddontwait_mutator">false</field>
-                  <value name="AMOUNT">
-                    <shadow type="math_number" id="yX`PckpcCMTmAeJmEV+;">
-                      <field name="NUM">30</field>
-                    </shadow>
-                  </value>
                 </block>
               </next>
             </block>
