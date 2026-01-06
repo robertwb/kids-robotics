@@ -227,12 +227,20 @@ textContent: |-
       # the next line is clock arithmetic so quarter_turns goes like 0 < 1 < 2 < 3 < 4 = 0
       return quarter_turns % 4
 
+  def pause_intake():
+      left_intake.stop()
+      right_intake.stop()
+      wait(0.5,SECONDS)
+      left_intake.spin(FORWARD)
+      right_intake.spin(FORWARD)
+
   def move_to_chamber(chamber_number):
       revolver.set_velocity(90,PERCENT)
       dif = (chamber_number - current_chamber()) % 4
       if dif == 1:
           revolver.spin_for(FORWARD, 5.0/4,TURNS)
       elif dif == 2:
+          brain.timer.event(pause_intake,0)
           revolver.spin_for(FORWARD, 5.0/2, TURNS)
       elif dif == 3:
           revolver.spin_for(REVERSE, 5.0/4, TURNS)
