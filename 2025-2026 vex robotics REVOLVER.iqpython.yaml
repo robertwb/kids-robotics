@@ -246,9 +246,12 @@ textContent: |-
           revolver.spin_for(REVERSE, 5.0/4, TURNS)
 
   def which_chamber(color):
+      pin_options = []
       for i in range(4):
           if color not in chambers [i]:
-            return i 
+            pin_options.append(i)
+      if len (pin_options) > 0 :
+          return max (pin_options, key = score_of_chambers)
       brain.screen.print("all chambers are full ", color )
       brain.play_sound(SoundType.SIREN)
       return -1
@@ -283,7 +286,17 @@ textContent: |-
       brain.play_note(4, 3, 670)
       brain.screen.clear_screen()
       
+  def distence(x,y):
+    dif = (x - y) % 4
+    if dif == 3:
+      return 1
+    else:
+      return dif  
+      
 
+  def score_of_chambers(chamber):
+      # the best chamber is the one that has the most pins and is closest that is avalible
+      len(chambers[chamber]), -distence(current_chamber(), chamber)
       
 
   def when_started1():
