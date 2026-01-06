@@ -16,7 +16,7 @@ if __name__ == '__main__':
   path = args.filename
   with open(path) as fin:
     content = format.format(fin.read())
-  basename = re.sub(r' [(]\d+[)]', '', os.path.basename(path)) + '.yaml'
+  basename = re.sub(r'( [(]\d+[)])+', '', os.path.basename(path)) + '.yaml'
   with open(basename, 'w') as fout:
     fout.write(content)
   subprocess.check_call(['git', 'diff', basename])
