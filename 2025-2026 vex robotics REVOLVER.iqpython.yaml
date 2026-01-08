@@ -296,7 +296,8 @@ textContent: |-
 
   def score_of_chambers(chamber):
       # the best chamber is the one that has the most pins and is closest that is avalible
-      len(chambers[chamber]), -distence(current_chamber(), chamber)
+      return len(chambers[chamber]), -distence(current_chamber(), chamber)
+
       
 
   def when_started1():
@@ -306,7 +307,8 @@ textContent: |-
       door.set_velocity(80, PERCENT)
       door.set_max_torque(50,PERCENT)
       door.set_timeout(0.2, SECONDS)
-      pneumatic_7.pump_off()
+      pneumatic_7.pump_on()
+      pneumatic_7.retract(CYLINDER2)
       revolver.set_velocity(100, PERCENT)
       left_intake.set_velocity(100, PERCENT)
       right_intake.set_velocity(100, PERCENT)
@@ -339,11 +341,11 @@ textContent: |-
 
   def trapdoor_out():
       global myVariable, is_intake_spinning, screen_precision, console_precision
-      pneumatic_7.extend(CYLINDER2)
+      pneumatic_7.retract(CYLINDER2)
 
   def trapdoor_in():
       global myVariable, is_intake_spinning, screen_precision, console_precision
-      pneumatic_7.retract(CYLINDER2)
+      pneumatic_7.extend(CYLINDER2)
 
   def intake_out():
       global myVariable, is_intake_spinning, screen_precision, console_precision
@@ -377,7 +379,7 @@ textContent: |-
           revolver.stop()
       else:
           revolver.set_velocity(controller.axisC.position())
-          revolver.spin(FORWARD)
+          revolver.spin(REVERSE)
 
   def chamber_reset():
       epmty_chambers()
