@@ -155,11 +155,6 @@ workspace: |
                                                 <block type="iq_screen_set_font" id="0n^IrN8B[K%41Kq:*,/h">
                                                   <field name="FONT">MONO</field>
                                                   <field name="SIZE">12</field>
-                                                  <next>
-                                                    <block type="procedures_call" id="gncm/6UHE:m(g%7ia`3D">
-                                                      <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="load_pins" proceduredefid="RK2#8A#YITUc~cI|RNF}" argumentids="[]" warp="false"/>
-                                                    </block>
-                                                  </next>
                                                 </block>
                                               </next>
                                             </block>
@@ -263,6 +258,24 @@ workspace: |
         </block>
       </next>
     </block>
+    <block type="iq_events_when_brain_button" id="=)1@XL8/U,eylk]@Qe17" x="670" y="550">
+      <field name="BUTTON">Check</field>
+      <field name="EVENTTYPE">released</field>
+      <next>
+        <block type="procedures_call" id="-Lwxm:w98I#RD3xx6/i*">
+          <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="far_pins" proceduredefid="ahbs_6_bFY31PPxHQ)~*" argumentids="[]" warp="false"/>
+        </block>
+      </next>
+    </block>
+    <block type="iq_events_when_brain_button" id="zp:#]_!BS-n=FE1rE;Nn" x="210" y="590">
+      <field name="BUTTON">Up</field>
+      <field name="EVENTTYPE">released</field>
+      <next>
+        <block type="procedures_call" id="gncm/6UHE:m(g%7ia`3D">
+          <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="load_pins" proceduredefid="RK2#8A#YITUc~cI|RNF}" argumentids="[]" warp="false"/>
+        </block>
+      </next>
+    </block>
     <block type="iq_drivetrain_drive_for" id="/ek@Y7w!$P)qWLP*D%fh" x="1170" y="550">
       <field name="DIRECTION">fwd</field>
       <field name="UNITS">in</field>
@@ -308,7 +321,7 @@ workspace: |
         </block>
       </next>
     </block>
-    <block type="procedures_definition" id=";a5bX?12$wGambf5{ep#" x="250" y="690">
+    <block type="procedures_definition" id=";a5bX?12$wGambf5{ep#" x="270" y="730">
       <statement name="custom_block">
         <shadow type="procedures_prototype" id="RK2#8A#YITUc~cI|RNF}">
           <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="load_pins" proceduredefid="RK2#8A#YITUc~cI|RNF}" argumentids="[]" argumentnames="[]" argumentdefaults="[]" argumenttypes="[]" warp="false"/>
@@ -432,6 +445,41 @@ workspace: |
                                                                           <field name="NUM">2</field>
                                                                         </shadow>
                                                                       </value>
+                                                                      <next>
+                                                                        <block type="iq_control_repeat" id="yuim;D,-Nrt(HfmM{Opm">
+                                                                          <value name="TIMES">
+                                                                            <shadow type="math_whole_number" id=".4JM7;ON4b2:6^jk]+{2">
+                                                                              <field name="NUM">2</field>
+                                                                            </shadow>
+                                                                          </value>
+                                                                          <statement name="SUBSTACK">
+                                                                            <block type="iq_motion_spin_for" id="!Nj}j{)DsLF%=Jn`rmHf">
+                                                                              <field name="MOTOR">revolver</field>
+                                                                              <field name="DIRECTION">fwd</field>
+                                                                              <field name="UNITS">rev</field>
+                                                                              <field name="anddontwait_mutator">false</field>
+                                                                              <value name="AMOUNT">
+                                                                                <shadow type="math_number" id="sVP:u;R_BEcF{l95*RA%">
+                                                                                  <field name="NUM">0.3</field>
+                                                                                </shadow>
+                                                                              </value>
+                                                                              <next>
+                                                                                <block type="iq_motion_spin_for" id="FmZ$IV|J{WeLYx(!t=,o">
+                                                                                  <field name="MOTOR">revolver</field>
+                                                                                  <field name="DIRECTION">rev</field>
+                                                                                  <field name="UNITS">rev</field>
+                                                                                  <field name="anddontwait_mutator">false</field>
+                                                                                  <value name="AMOUNT">
+                                                                                    <shadow type="math_number" id="X.QWqo5ULx+7WtkhY_.P">
+                                                                                      <field name="NUM">0.3</field>
+                                                                                    </shadow>
+                                                                                  </value>
+                                                                                </block>
+                                                                              </next>
+                                                                            </block>
+                                                                          </statement>
+                                                                        </block>
+                                                                      </next>
                                                                     </block>
                                                                   </next>
                                                                 </block>
@@ -470,32 +518,44 @@ workspace: |
         </block>
       </next>
     </block>
-    <block type="procedures_definition" id="Z~ipUi[8o%!:kOyF_dz)" x="1050" y="710">
+    <block type="procedures_definition" id="Z~ipUi[8o%!:kOyF_dz)" x="1130" y="790">
       <statement name="custom_block">
         <shadow type="procedures_prototype" id="ahbs_6_bFY31PPxHQ)~*">
           <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="far_pins" proceduredefid="ahbs_6_bFY31PPxHQ)~*" argumentids="[]" argumentnames="[]" argumentdefaults="[]" argumenttypes="[]" warp="false"/>
         </shadow>
       </statement>
       <next>
-        <block type="iq_drivetrain_drive_for" id="ji^0kbV9ZwE(UTF]Qs_W">
+        <block type="iq_motion_spin" id="(PyTG#EH|W@{P_6k0O!$">
+          <field name="MOTOR">left_intake</field>
           <field name="DIRECTION">fwd</field>
-          <field name="UNITS">in</field>
-          <field name="anddontwait_mutator">false</field>
-          <value name="AMOUNT">
-            <shadow type="math_number" id="g**ZclssH=pVwMWv*15W">
-              <field name="NUM">26</field>
-            </shadow>
-          </value>
           <next>
-            <block type="iq_control_wait" id="$ino[,C;u0c_)74q@Vi#">
-              <value name="DURATION">
-                <shadow type="math_positive_number" id="z8+[?w;916S.._lgQ^WH">
-                  <field name="NUM">2.3</field>
-                </shadow>
-              </value>
+            <block type="iq_motion_spin" id="wEc!%-DOY*]:})8U1#gK">
+              <field name="MOTOR">right_intake</field>
+              <field name="DIRECTION">fwd</field>
               <next>
-                <block type="procedures_call" id="N0R?%y=x]ma#a#G}2mnS">
-                  <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="eject" proceduredefid="t7%^y2[/}FXN}8lGqiKA" argumentids="[]" warp="false"/>
+                <block type="iq_drivetrain_drive_for" id="ji^0kbV9ZwE(UTF]Qs_W">
+                  <field name="DIRECTION">fwd</field>
+                  <field name="UNITS">in</field>
+                  <field name="anddontwait_mutator">false</field>
+                  <value name="AMOUNT">
+                    <shadow type="math_number" id="g**ZclssH=pVwMWv*15W">
+                      <field name="NUM">26</field>
+                    </shadow>
+                  </value>
+                  <next>
+                    <block type="iq_control_wait" id="$ino[,C;u0c_)74q@Vi#">
+                      <value name="DURATION">
+                        <shadow type="math_positive_number" id="z8+[?w;916S.._lgQ^WH">
+                          <field name="NUM">2.3</field>
+                        </shadow>
+                      </value>
+                      <next>
+                        <block type="procedures_call" id="N0R?%y=x]ma#a#G}2mnS">
+                          <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="eject" proceduredefid="t7%^y2[/}FXN}8lGqiKA" argumentids="[]" warp="false"/>
+                        </block>
+                      </next>
+                    </block>
+                  </next>
                 </block>
               </next>
             </block>
