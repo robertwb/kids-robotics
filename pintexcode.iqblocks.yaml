@@ -369,8 +369,13 @@ workspace: |
                 </shadow>
               </value>
               <next>
-                <block type="procedures_call" id="4xdpOZH9@0@pntS%+bcr">
-                  <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="part_1" proceduredefid="@Iqyiz3YfmM{C=y?X[+X" argumentids="[]" warp="false"/>
+                <block type="procedures_call" id="H^%ahw.E}xx2x+`|z=_I">
+                  <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="part_2" proceduredefid="i4Xt91{KG~nG41J:AWA-" argumentids="[]" warp="false"/>
+                  <next>
+                    <block type="procedures_call" id="{N:708(OgR/r}8ea-qyl">
+                      <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="part_3" proceduredefid="7|nBf)%e9t!vc$#zjE=}" argumentids="[]" warp="false"/>
+                    </block>
+                  </next>
                 </block>
               </next>
             </block>
@@ -387,13 +392,8 @@ workspace: |
         </block>
       </next>
     </block>
-    <block type="procedures_call" id="H^%ahw.E}xx2x+`|z=_I" x="1830" y="690">
-      <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="part_2" proceduredefid="i4Xt91{KG~nG41J:AWA-" argumentids="[]" warp="false"/>
-      <next>
-        <block type="procedures_call" id="{N:708(OgR/r}8ea-qyl">
-          <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="part_3" proceduredefid="7|nBf)%e9t!vc$#zjE=}" argumentids="[]" warp="false"/>
-        </block>
-      </next>
+    <block type="procedures_call" id="4xdpOZH9@0@pntS%+bcr" x="1690" y="790">
+      <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="part_1" proceduredefid="@Iqyiz3YfmM{C=y?X[+X" argumentids="[]" warp="false"/>
     </block>
     <block type="iq_events_when_controller_button" id="nM?dcx~x@^)??RGX@)P," x="190" y="870">
       <field name="BUTTON">ButtonEUp</field>
@@ -417,7 +417,7 @@ workspace: |
         </block>
       </next>
     </block>
-    <block type="procedures_definition" id="b:bEq`r?jn~pSrnismO%" x="1549" y="831">
+    <block type="procedures_definition" id="b:bEq`r?jn~pSrnismO%" x="1570" y="890">
       <statement name="custom_block">
         <shadow type="procedures_prototype" id="i4Xt91{KG~nG41J:AWA-">
           <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="part_2" proceduredefid="i4Xt91{KG~nG41J:AWA-" argumentids="[]" argumentnames="[]" argumentdefaults="[]" argumenttypes="[]" warp="false"/>
@@ -493,7 +493,7 @@ workspace: |
                                               <field name="anddontwait_mutator">false</field>
                                               <value name="AMOUNT">
                                                 <shadow type="math_number" id="Idj_/~C?D)Nw{jFrb!fd">
-                                                  <field name="NUM">4</field>
+                                                  <field name="NUM">3</field>
                                                 </shadow>
                                               </value>
                                               <next>
@@ -509,7 +509,7 @@ workspace: |
                                                       <field name="anddontwait_mutator">false</field>
                                                       <value name="AMOUNT">
                                                         <shadow type="math_number" id="RO|6FR./V)sz^bA$I={X">
-                                                          <field name="NUM">3.67</field>
+                                                          <field name="NUM">1.67</field>
                                                         </shadow>
                                                       </value>
                                                       <next>
@@ -538,7 +538,7 @@ workspace: |
                                                                   <field name="anddontwait_mutator">false</field>
                                                                   <value name="AMOUNT">
                                                                     <shadow type="math_number" id="m$1wCt8G(knk(hLpD+t:">
-                                                                      <field name="NUM">3</field>
+                                                                      <field name="NUM">2</field>
                                                                     </shadow>
                                                                   </value>
                                                                   <next>
