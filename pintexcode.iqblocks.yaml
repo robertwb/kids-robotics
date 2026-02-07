@@ -183,7 +183,7 @@ workspace: |
                           <field name="anddontwait_mutator">false</field>
                           <value name="AMOUNT">
                             <shadow type="math_number" id="tuiJ,cLM7Qhi-*(lk^s]">
-                              <field name="NUM">16</field>
+                              <field name="NUM">17</field>
                             </shadow>
                           </value>
                           <next>
@@ -365,15 +365,20 @@ workspace: |
             <block type="iq_control_wait" id="~,l^QU%9%vBjC6Y2FYm;">
               <value name="DURATION">
                 <shadow type="math_positive_number" id="P*^PkqBu|S.=Bg3$C|tW">
-                  <field name="NUM">1</field>
+                  <field name="NUM">0.6</field>
                 </shadow>
               </value>
               <next>
-                <block type="procedures_call" id="H^%ahw.E}xx2x+`|z=_I">
-                  <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="part_2" proceduredefid="i4Xt91{KG~nG41J:AWA-" argumentids="[]" warp="false"/>
+                <block type="procedures_call" id="4xdpOZH9@0@pntS%+bcr">
+                  <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="part_1" proceduredefid="@Iqyiz3YfmM{C=y?X[+X" argumentids="[]" warp="false"/>
                   <next>
-                    <block type="procedures_call" id="{N:708(OgR/r}8ea-qyl">
-                      <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="part_3" proceduredefid="7|nBf)%e9t!vc$#zjE=}" argumentids="[]" warp="false"/>
+                    <block type="procedures_call" id="H^%ahw.E}xx2x+`|z=_I">
+                      <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="part_2" proceduredefid="i4Xt91{KG~nG41J:AWA-" argumentids="[]" warp="false"/>
+                      <next>
+                        <block type="procedures_call" id="{N:708(OgR/r}8ea-qyl">
+                          <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="part_3" proceduredefid="7|nBf)%e9t!vc$#zjE=}" argumentids="[]" warp="false"/>
+                        </block>
+                      </next>
                     </block>
                   </next>
                 </block>
@@ -391,9 +396,6 @@ workspace: |
           <field name="MOTOR">beam_claw_arm</field>
         </block>
       </next>
-    </block>
-    <block type="procedures_call" id="4xdpOZH9@0@pntS%+bcr" x="1690" y="790">
-      <mutation xmlns="http://www.w3.org/1999/xhtml" proccode="part_1" proceduredefid="@Iqyiz3YfmM{C=y?X[+X" argumentids="[]" warp="false"/>
     </block>
     <block type="iq_events_when_controller_button" id="nM?dcx~x@^)??RGX@)P," x="190" y="870">
       <field name="BUTTON">ButtonEUp</field>
@@ -463,100 +465,124 @@ workspace: |
                               <field name="CYLINDER">cylinder2</field>
                               <field name="STATE">extend</field>
                               <next>
-                                <block type="iq_motion_set_motor_timeout" id="bf/U(RT5XjJ0svlAfb%6">
-                                  <field name="MOTOR">pin_claw_arm</field>
-                                  <value name="TIMEOUT">
-                                    <shadow type="math_number" id="nbIP[oJ}T~M0bgX_i|[@">
-                                      <field name="NUM">1.5</field>
+                                <block type="iq_drivetrain_drive_for" id="T!H;)D?K]h;(cu4FEuyR">
+                                  <field name="DIRECTION">rev</field>
+                                  <field name="UNITS">in</field>
+                                  <field name="anddontwait_mutator">false</field>
+                                  <value name="AMOUNT">
+                                    <shadow type="math_number" id="z*cUTdw|%l^){S2)!JM]">
+                                      <field name="NUM">4</field>
                                     </shadow>
                                   </value>
                                   <next>
-                                    <block type="iq_motion_set_motor_timeout" id="|LYh:9psB^_xkM3MBW[0">
-                                      <field name="MOTOR">beam_claw_arm</field>
-                                      <value name="TIMEOUT">
-                                        <shadow type="math_number" id="oU24Rnsrs[:WJ4D+_VDS">
-                                          <field name="NUM">2</field>
+                                    <block type="iq_drivetrain_drive_for" id="D#X!nlWqg+uR(;wohO%B">
+                                      <field name="DIRECTION">fwd</field>
+                                      <field name="UNITS">in</field>
+                                      <field name="anddontwait_mutator">false</field>
+                                      <value name="AMOUNT">
+                                        <shadow type="math_number" id=".#qvqf6/W7*=ZsE6V+D5">
+                                          <field name="NUM">4.3</field>
                                         </shadow>
                                       </value>
                                       <next>
-                                        <block type="iq_control_wait" id="F[*IbN0|:J5FB%%tg?8,">
-                                          <value name="DURATION">
-                                            <shadow type="math_positive_number" id="7X_B{M@Z6d$4PapD0Tvq">
-                                              <field name="NUM">0.7</field>
+                                        <block type="iq_motion_set_motor_timeout" id="bf/U(RT5XjJ0svlAfb%6">
+                                          <field name="MOTOR">pin_claw_arm</field>
+                                          <value name="TIMEOUT">
+                                            <shadow type="math_number" id="nbIP[oJ}T~M0bgX_i|[@">
+                                              <field name="NUM">1.5</field>
                                             </shadow>
                                           </value>
                                           <next>
-                                            <block type="iq_motion_spin_for" id="fZ`^%pvIkrle_F6,{TB:">
-                                              <field name="MOTOR">pin_claw_arm</field>
-                                              <field name="DIRECTION">fwd</field>
-                                              <field name="UNITS">rev</field>
-                                              <field name="anddontwait_mutator">false</field>
-                                              <value name="AMOUNT">
-                                                <shadow type="math_number" id="Idj_/~C?D)Nw{jFrb!fd">
-                                                  <field name="NUM">3</field>
+                                            <block type="iq_motion_set_motor_timeout" id="|LYh:9psB^_xkM3MBW[0">
+                                              <field name="MOTOR">beam_claw_arm</field>
+                                              <value name="TIMEOUT">
+                                                <shadow type="math_number" id="oU24Rnsrs[:WJ4D+_VDS">
+                                                  <field name="NUM">2</field>
                                                 </shadow>
                                               </value>
                                               <next>
-                                                <block type="iq_motion_pneumatics_cylinder" id="I81p/[r-2Ch*VL4VT^F{">
-                                                  <field name="PNEUMATIC">pumpy_thing</field>
-                                                  <field name="CYLINDER">cylinder1</field>
-                                                  <field name="STATE">retract</field>
+                                                <block type="iq_control_wait" id="F[*IbN0|:J5FB%%tg?8,">
+                                                  <value name="DURATION">
+                                                    <shadow type="math_positive_number" id="7X_B{M@Z6d$4PapD0Tvq">
+                                                      <field name="NUM">0.7</field>
+                                                    </shadow>
+                                                  </value>
                                                   <next>
-                                                    <block type="iq_motion_spin_for" id="()wIl8i_$djWGh9mLrd.">
+                                                    <block type="iq_motion_spin_for" id="fZ`^%pvIkrle_F6,{TB:">
                                                       <field name="MOTOR">pin_claw_arm</field>
-                                                      <field name="DIRECTION">rev</field>
+                                                      <field name="DIRECTION">fwd</field>
                                                       <field name="UNITS">rev</field>
                                                       <field name="anddontwait_mutator">false</field>
                                                       <value name="AMOUNT">
-                                                        <shadow type="math_number" id="RO|6FR./V)sz^bA$I={X">
-                                                          <field name="NUM">1.67</field>
+                                                        <shadow type="math_number" id="Idj_/~C?D)Nw{jFrb!fd">
+                                                          <field name="NUM">3</field>
                                                         </shadow>
                                                       </value>
                                                       <next>
-                                                        <block type="iq_drivetrain_drive_for" id="7?J|3wW1evxRN8P0J^,]">
-                                                          <field name="DIRECTION">rev</field>
-                                                          <field name="UNITS">in</field>
-                                                          <field name="anddontwait_mutator">false</field>
-                                                          <value name="AMOUNT">
-                                                            <shadow type="math_number" id="MnhC|O:E?@}h[dr}/7@%">
-                                                              <field name="NUM">6</field>
-                                                            </shadow>
-                                                          </value>
+                                                        <block type="iq_motion_pneumatics_cylinder" id="I81p/[r-2Ch*VL4VT^F{">
+                                                          <field name="PNEUMATIC">pumpy_thing</field>
+                                                          <field name="CYLINDER">cylinder1</field>
+                                                          <field name="STATE">retract</field>
                                                           <next>
-                                                            <block type="iq_motion_set_motor_timeout" id="E2C+@x[:=]`)CBQL@$D6">
+                                                            <block type="iq_motion_spin_for" id="()wIl8i_$djWGh9mLrd.">
                                                               <field name="MOTOR">pin_claw_arm</field>
-                                                              <value name="TIMEOUT">
-                                                                <shadow type="math_number" id="vN;;(kG*l:GME^Zlv_Xv">
-                                                                  <field name="NUM">1</field>
+                                                              <field name="DIRECTION">rev</field>
+                                                              <field name="UNITS">rev</field>
+                                                              <field name="anddontwait_mutator">false</field>
+                                                              <value name="AMOUNT">
+                                                                <shadow type="math_number" id="RO|6FR./V)sz^bA$I={X">
+                                                                  <field name="NUM">1.67</field>
                                                                 </shadow>
                                                               </value>
                                                               <next>
-                                                                <block type="iq_motion_spin_for" id="{OWl^PKdu.6;TqT=cO7?">
-                                                                  <field name="MOTOR">beam_claw_arm</field>
-                                                                  <field name="DIRECTION">fwd</field>
-                                                                  <field name="UNITS">rev</field>
+                                                                <block type="iq_drivetrain_drive_for" id="QDowHvs3EMjt!t!FsKKX">
+                                                                  <field name="DIRECTION">rev</field>
+                                                                  <field name="UNITS">in</field>
                                                                   <field name="anddontwait_mutator">false</field>
                                                                   <value name="AMOUNT">
-                                                                    <shadow type="math_number" id="m$1wCt8G(knk(hLpD+t:">
-                                                                      <field name="NUM">2</field>
+                                                                    <shadow type="math_number" id="Vv{i=nvBVa2)IV-(@Lj?">
+                                                                      <field name="NUM">6</field>
                                                                     </shadow>
                                                                   </value>
                                                                   <next>
-                                                                    <block type="iq_drivetrain_set_drive_timeout" id="C2VAhZZkR%b/V.D[r/w)">
+                                                                    <block type="iq_motion_set_motor_timeout" id="E2C+@x[:=]`)CBQL@$D6">
+                                                                      <field name="MOTOR">pin_claw_arm</field>
                                                                       <value name="TIMEOUT">
-                                                                        <shadow type="math_number" id="i43V~H-=pD]]E^Oc$_ct">
-                                                                          <field name="NUM">5</field>
+                                                                        <shadow type="math_number" id="vN;;(kG*l:GME^Zlv_Xv">
+                                                                          <field name="NUM">1</field>
                                                                         </shadow>
                                                                       </value>
                                                                       <next>
-                                                                        <block type="iq_drivetrain_turn_for" id=",hR((HP7OK^sy,2dEr^D">
-                                                                          <field name="TURNDIRECTION">right</field>
+                                                                        <block type="iq_motion_spin_for" id="{OWl^PKdu.6;TqT=cO7?">
+                                                                          <field name="MOTOR">beam_claw_arm</field>
+                                                                          <field name="DIRECTION">fwd</field>
+                                                                          <field name="UNITS">rev</field>
                                                                           <field name="anddontwait_mutator">false</field>
                                                                           <value name="AMOUNT">
-                                                                            <shadow type="math_number" id="Bdf*d*XB-$*]cH07)n9L">
-                                                                              <field name="NUM">90</field>
+                                                                            <shadow type="math_number" id="m$1wCt8G(knk(hLpD+t:">
+                                                                              <field name="NUM">2</field>
                                                                             </shadow>
                                                                           </value>
+                                                                          <next>
+                                                                            <block type="iq_drivetrain_set_drive_timeout" id="C2VAhZZkR%b/V.D[r/w)">
+                                                                              <value name="TIMEOUT">
+                                                                                <shadow type="math_number" id="i43V~H-=pD]]E^Oc$_ct">
+                                                                                  <field name="NUM">5</field>
+                                                                                </shadow>
+                                                                              </value>
+                                                                              <next>
+                                                                                <block type="iq_drivetrain_turn_for" id=",hR((HP7OK^sy,2dEr^D">
+                                                                                  <field name="TURNDIRECTION">right</field>
+                                                                                  <field name="anddontwait_mutator">false</field>
+                                                                                  <value name="AMOUNT">
+                                                                                    <shadow type="math_number" id="Bdf*d*XB-$*]cH07)n9L">
+                                                                                      <field name="NUM">98</field>
+                                                                                    </shadow>
+                                                                                  </value>
+                                                                                </block>
+                                                                              </next>
+                                                                            </block>
+                                                                          </next>
                                                                         </block>
                                                                       </next>
                                                                     </block>
